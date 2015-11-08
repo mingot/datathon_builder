@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Enter submission{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<h1> Leaderboard </h1>
+	<hr>
+
+	{% if teams %}
+
+	<div class="col-lg-8">
+        <table class="table">
+        <thead>
+        	<th>position</th>
+        	<th>team</th>
+        	<th>last_submission</th>
+        	<th># submissions</th>
+        	<th>auc</th>
+		</thead>
+        <tbody>
+        {% for team in teams %}
+          <tr>
+            <td>{{ forloop.counter }}</td>      
+            <td>{{ team.user.username }}</td>
+            <td>{{ team.last_update }}</td>
+            <td>{{ team.number }}</td>
+            <td>{{ team.auc }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table> 
+    </div>
+		
+        
+    {% else %}
+        <p>No submissions yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock content %}

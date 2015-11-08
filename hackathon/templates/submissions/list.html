@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Enter submission{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<h1> Model submissions </h1>
+	<hr>
+
+    <!-- Upload form. Note enctype attribute! -->
+    <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <p>{{ form.submissionfile.label_tag }} {{ form.submissionfile.help_text }}</p>
+        <p>
+            {{ form.submissionfile.errors }}
+            {{ form.submissionfile }}
+        </p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+
+    <!-- List of uploaded submissions -->
+
+    {% if submissions %}
+
+	<div class="col-lg-8">
+        <table class="table">
+        <thead>
+        	<th>file</th>
+        	<th>date</th>
+        	<th>auc</th>
+		</thead>
+        <tbody>
+        {% for submission in submissions %}
+          <tr>
+            <td><a href="{{ submission.submissionfile.url }}">{{ submission.submissionfile.name }}</a></td>      
+            <td>{{submission.created_at}}</td>
+            <td>{{submission.auc}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table> 
+    </div>
+		
+        
+    {% else %}
+        <p>No submissions yet.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

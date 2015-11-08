@@ -48,10 +48,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
+              </li>
             </ul>
 
             <ul class="nav navbar-nav pull-right">
               {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'list' %}">My Submissions</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
                 </li>

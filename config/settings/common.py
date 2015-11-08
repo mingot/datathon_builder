@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = (
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'hackathon.users',  # custom users app
+    'submissions'
     # Your stuff: custom apps go here
 )
 
