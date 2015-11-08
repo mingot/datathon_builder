@@ -1,0 +1,3 @@
+[run]
+include = hackathon/*
+omit = *migrations*, *tests*
