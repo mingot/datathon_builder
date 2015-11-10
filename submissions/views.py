@@ -21,7 +21,7 @@ def submissions_list(request):
 		form = SubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
 			fi = request.FILES['submissionfile']
-			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc=random.random())
+			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user)
 			newdoc.save()
 
 			# Redirect to the document list after POST
@@ -47,7 +47,7 @@ def leaderboard(request):
 	# sum submissions, group by user
 	# max created_at, group by user 
 
-	teams = Submission.objects.values('user').annotate(auc=Max('auc'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
+	teams = Submission.objects.values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
 	for team in teams:
 		team['user'] = User.objects.get(pk=team['user'])
 		team['user'].name
