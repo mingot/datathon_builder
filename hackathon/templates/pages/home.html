@@ -1,16 +1,51 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+/*body {
+  padding-top: 5rem;
+}*/
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.panel {
+      width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+#btn-reset {
+  margin-right: 10px;
+}
+#clock {
+  margin-bottom: 0;
+}
+</style>
+{% endblock extra_css %}
+
+
 {% block title %}Enter submission{% endblock %}
 
 {% block content %}
 
 
-	<div class="jumbotron">
-        <h1>Marketing stuff!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+
+	<div class="starter-template">
+        <h1>Barcelona Gaming Data Hackathon</h1>
+        <p class="lead">
+          Welcome data hacker to the BCN Gaming Hackathon.<br> 
+          24 hours to show your habilities to the world.<br> 
+          Ready?</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started</a></p>
+
+         <div class="panel panel-default" data-toggle="tooltip" data-placement="top" title="Beautifull, insn't it?">
+      <div class="panel-body">
+        <div class="lead" id="clock"></div>
+      </div>
+    </div>
 	</div>
 
+  <!--
 	<div class="row">
         <div class="col-lg-4">
           <h2>Safari bug warning!</h2>
@@ -29,6 +64,39 @@
           <p><a class="btn btn-primary" href="#" role="button">View details »</a></p>
         </div>
       </div>
+    -->
 
 
 {% endblock content %}
+
+{% block extra_js %}
+<script>
+
+  // Turn on Bootstrap
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // 15 days from now!
+  function get15dayFromNow() {
+    return new Date(new Date().valueOf() + 15 * 24 * 60 * 60 * 1000);
+  }
+
+  var $clock = $('#clock');
+
+  $clock.countdown(get15dayFromNow(), function(event) {
+    $(this).html(event.strftime('%D days %H:%M:%S'));
+  });
+
+  $('#btn-reset').click(function() {
+    $clock.countdown(get15dayFromNow());
+  });
+
+  $('#btn-pause').click(function() {
+    $clock.countdown('pause');
+  });
+
+  $('#btn-resume').click(function() {
+    $clock.countdown('resume');
+  });
+
+</script> 
+{% endblock extra_js %}

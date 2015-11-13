@@ -23,6 +23,9 @@
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
 
+    {% block extra_css %}
+    {% endblock extra_css %}
+
     {% block angular %}
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     {% endblock %}
@@ -34,7 +37,7 @@
     <div class="m-b">
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
         <div class="container">
-          <a class="navbar-brand" href="/">hackathon</a>
+          <a class="navbar-brand" href="/">BCN Data Hackathon</a>
           <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
             &#9776;
           </button>
@@ -50,10 +53,10 @@
             <ul class="nav navbar-nav pull-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'list' %}">My Submissions</a>
+                  <a class="nav-link" href="{% url 'list' %}">Submissions</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "Profile" %}</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
@@ -103,6 +106,8 @@
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
     {% endblock javascript %}
+    {% block extra_js %}
+    {% endblock extra_js %}
   </body>
 </html>
  
