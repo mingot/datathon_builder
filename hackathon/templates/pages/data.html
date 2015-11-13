@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+
+
+
+
+{% block title %}Get the data{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <h1> Get the data </h1>
+  <hr>
+
+  <p><a class="btn btn-lg btn-success" href="{% static 'files/train_test.zip' %}" role="button">Get Train and Test</a></p>
+
+</div>
+{% endblock content %}
