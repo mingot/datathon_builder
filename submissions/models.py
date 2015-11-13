@@ -5,8 +5,8 @@ from hackathon.users.models import User
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 import threading
-import numpy as np
-from sklearn import metrics
+# import numpy as np
+# from sklearn import metrics
 
 
 result_file = open(str(ROOT_DIR) + '/test.csv')
@@ -35,7 +35,6 @@ for r in result_file:
 
 def tied_rank(x):
     """
-    Computes the tied rank of elements in x.
     This function computes the tied rank of elements in x.
     Parameters
     ----------
@@ -62,7 +61,6 @@ def tied_rank(x):
 
 def auc(actual, posterior):
     """
-    Computes the area under the receiver-operater characteristic (AUC)
     This function computes the AUC error metric for binary classification.
     Parameters
     ----------
