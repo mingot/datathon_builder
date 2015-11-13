@@ -41,5 +41,5 @@ redis>=2.10.0
 
 # Your custom requirements go here
 numpy==1.10.1
-sklearn==0.0
 scipy==0.16.1
+sklearn==0.0
