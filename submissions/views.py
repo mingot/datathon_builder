@@ -31,12 +31,14 @@ def submissions_list(request):
 
     # Load documents for the list page
 	documents = Submission.objects.filter(user=current_user)
+	if documents:
+		documents = documents[::-1]  # rever order
 	
 
     # Render list page with the documents and the form
 	return render_to_response(
 		'submissions/list.html',
-		{'submissions': documents[::-1], 'form': form},
+		{'submissions': documents, 'form': form},
 		context_instance=RequestContext(request)
 	)
 
