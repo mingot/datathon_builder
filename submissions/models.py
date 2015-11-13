@@ -5,6 +5,7 @@ from hackathon.users.models import User
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 import threading
+import requests
 # import numpy as np
 # from sklearn import metrics
 
@@ -97,8 +98,14 @@ class Submission(models.Model):
 	def compute_score(self):
 		predicted_private = []
 		predicted_public = []
-		results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
-		i = 0
+        if self.submission.url[0:4]=='http':
+            # AWS S3 submission
+            results_file = requests.get(self.submissionfile.url).text.split('\n')
+
+        else:
+    		results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
+
+        i = 0
 		for r in results_file:
 			if i%10==0:
 				predicted_public.append(float(r))
