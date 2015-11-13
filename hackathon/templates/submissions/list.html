@@ -9,22 +9,21 @@
 	<hr>
 
     <!-- Upload form. Note enctype attribute! -->
-    <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p>{{ form.non_field_errors }}</p>
-        <p>{{ form.submissionfile.label_tag }} {{ form.submissionfile.help_text }}</p>
-        <p>
-            {{ form.submissionfile.errors }}
-            {{ form.submissionfile }}
-        </p>
-        <p><input type="submit" value="Upload" /></p>
-    </form>
+    <div class="col-lg-offset-2 col-lg-8">
+    <div class="jumbotron">
+        <p class="lead">Submit your predicted scores for the the churn target. File must have a predicted score in each line with 10 decimal places at most.</p>
+        <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.submissionfile.errors }}{{ form.submissionfile }}</p>
+            <p><input class="btn-primary" type="submit" value="Upload" /></p>
+        </form>
+    </div>
+    </div>
 
     <!-- List of uploaded submissions -->
-
+    <div class="col-lg-offset-2 col-lg-8">
     {% if submissions %}
-
-	<div class="col-lg-8">
         <table class="table">
         <thead>
         	<th>file</th>
@@ -36,17 +35,16 @@
           <tr>
             <td><a href="{{ submission.submissionfile.url }}">{{ submission.submissionfile.name }}</a></td>      
             <td>{{submission.created_at}}</td>
-            <td>{{submission.auc}}</td>
+            <td>{{submission.auc_public}}</td>
           </tr>
         {% endfor %}
         </tbody>
         </table> 
-    </div>
-		
-        
+    
     {% else %}
         <p>No submissions yet.</p>
     {% endif %}
+    </div>
 </div>
 
 {% endblock content %}

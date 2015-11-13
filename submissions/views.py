@@ -25,29 +25,25 @@ def submissions_list(request):
 			newdoc.save()
 
 			# Redirect to the document list after POST
-			return HttpResponseRedirect(reverse('home'))
+			return HttpResponseRedirect(reverse('list'))
 	else:
 		form = SubmissionForm() # A empty, unbound form
 
     # Load documents for the list page
-	# documents = Submission.objects.all()
 	documents = Submission.objects.filter(user=current_user)
 	
 
     # Render list page with the documents and the form
 	return render_to_response(
 		'submissions/list.html',
-		{'submissions': documents, 'form': form},
+		{'submissions': documents[::-1], 'form': form},
 		context_instance=RequestContext(request)
 	)
 
 
 def leaderboard(request):
-	# max auc, group by user
-	# sum submissions, group by user
-	# max created_at, group by user 
 
-	teams = Submission.objects.values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
+	teams = Submission.objects.exclude(auc_public__isnull=True).values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('-auc')
 	for team in teams:
 		team['user'] = User.objects.get(pk=team['user'])
 		team['user'].name

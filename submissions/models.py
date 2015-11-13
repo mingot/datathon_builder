@@ -9,33 +9,27 @@ import numpy as np
 from sklearn import metrics
 
 
-
-result_file = open(str(ROOT_DIR) + '/result.csv')
+result_file = open(str(ROOT_DIR) + '/test.csv')
 real_private = []
 real_public = []
 public_indexes = []
 i = 0
 for r in result_file:
-	r = r.rstrip().split(',')
-	if int(r[2])==1:  # Private
-		real_private.append(int(r[1]))
-	else:
-		real_public.append(int(r[1]))
+	if i%10==0:  # Private (20%)
+		real_public.append(int(r))
 		public_indexes.append(i)
+		
+	else:
+		real_private.append(int(r))
 	i+=1
-print real_public
-print real_private
-print public_indexes
-
 
 
 def auc(real, pred):
-	print real
-	print pred
 	real = np.array(real)
 	pred = np.array(pred)
-	fpr, tpr, thresholds = metrics.roc_curve(real, pred, pos_label=1)
-	result = metrics.auc(fpr, tpr)
+	# fpr, tpr, thresholds = metrics.roc_curve(real, pred, pos_label=1)
+	# result = metrics.auc(fpr, tpr)
+	result = metrics.roc_auc_score(real, pred)
 	return result
 
 
@@ -51,21 +45,19 @@ class Submission(models.Model):
 		return u'%s submission: %s' % (self.user.username, self.submissionfile.url)
 
 	def compute_score(self):
-		print 'reading files...'
 		predicted_private = []
 		predicted_public = []
 		results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
 		i = 0
 		for r in results_file:
-			if i in public_indexes:
+			if i%10==0:
 				predicted_public.append(float(r))
 			else:
 				predicted_private.append(float(r))
 			i+=1
 
-		print 'computing auc...'
 		self.auc_public = auc(real_public, predicted_public)
-		self.auc_private = auc(real_private, predicted_private)
+		# self.auc_private = auc(real_private, predicted_private)
 		self.save()
 
  
