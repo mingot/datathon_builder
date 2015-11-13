@@ -37,8 +37,11 @@
           24 hours to show your habilities to the world.<br> 
           Ready?</p>
         <!-- <div class="lead" id="clock"></div> -->
-        
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started</a></p>
+        {% if user.is_authenticated %}
+        <p><a class="btn btn-lg btn-success" href="{% url 'list' %}" role="button">Make a submission</a></p>
+        {% else %}
+        <p><a class="btn btn-lg btn-success" href="{% url 'account_login' %}" role="button">Get started</a></p>
+        {% endif %}
         
 
 
