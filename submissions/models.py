@@ -82,6 +82,7 @@ def auc(actual, posterior):
            (num_negative*num_positive))
     return auc
 
+
 class Submission(models.Model):
 
 	submissionfile = models.FileField(upload_to='documents/')
