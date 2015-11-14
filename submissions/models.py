@@ -98,7 +98,7 @@ class Submission(models.Model):
     def compute_score(self):
         predicted_private = []
         predicted_public = []
-        if self.submission.url[0:4]=='http':
+        if self.submissionfile.url[0:4]=='http':
             # AWS S3 submission casa
             results_file = requests.get(self.submissionfile.url).text.split('\n')
 
