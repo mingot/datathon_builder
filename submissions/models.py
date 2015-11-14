@@ -107,6 +107,8 @@ class Submission(models.Model):
 
         i = 0
         for r in results_file:
+            if r=='':
+                continue
             if i%10==0:
                 predicted_public.append(float(r))
             else:
