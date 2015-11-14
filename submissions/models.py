@@ -14,19 +14,19 @@ from slugify import slugify
 # from sklearn import metrics
 
 
-result_file = open(str(ROOT_DIR) + '/test.csv')
-real_private = []
-real_public = []
-public_indexes = []
-i = 0
-for r in result_file:
-	if i%20==0:  # Private (20%)
-		real_public.append(int(r))
-		public_indexes.append(i)
+# result_file = open(str(ROOT_DIR) + '/test.csv')
+# real_private = []
+# real_public = []
+# public_indexes = []
+# i = 0
+# for r in result_file:
+# 	if i%20==0:  # Private (20%)
+# 		real_public.append(int(r))
+# 		public_indexes.append(i)
 		
-	else:
-		real_private.append(int(r))
-	i+=1
+# 	else:
+# 		real_private.append(int(r))
+# 	i+=1
 
 
 # def auc(real, pred):
@@ -64,6 +64,7 @@ def tied_rank(x):
                 r[sorted_x[j][1]] = float(last_rank+i+2)/2.0
     return r
 
+
 def auc(actual, posterior):
     """
     This function computes the AUC error metric for binary classification.
@@ -99,7 +100,7 @@ class Submission(models.Model):
     auc_public = models.FloatField(null=True, blank=True)
     auc_private = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)  
+    user = models.ForeignKey(User)
     file_error = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
@@ -145,15 +146,15 @@ class Submission(models.Model):
         self.save()
 
  
-@receiver(post_save, sender=Submission)
-def submission_done(sender, **kwargs):
-	"""
-		After save compute score in a new thread
-	"""
-	submission = kwargs['instance']
-	if submission.auc_public is None:
-		print 'creating thread to compute auc...'
-        submission.compute_score()
+# @receiver(post_save, sender=Submission)
+# def submission_done(sender, **kwargs):
+# 	"""
+# 		After save compute score in a new thread
+# 	"""
+# 	submission = kwargs['instance']
+# 	if submission.auc_public is None:
+# 		print 'creating thread to compute auc...'
+#         submission.compute_score()
 		# score_computation_thread = threading.Thread(target=submission.compute_score,args=[])
 		# score_computation_thread.start()
 
