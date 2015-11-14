@@ -4,8 +4,11 @@ from config.settings.common import ROOT_DIR
 from hackathon.users.models import User
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from datetime import datetime
+import random
 import threading
 import requests
+
 # import numpy as np
 # from sklearn import metrics
 
@@ -86,7 +89,7 @@ def auc(actual, posterior):
 
 def update_filename(instance, filename):
     # path = "upload/path/"
-    name = 'documents/' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S')
+    name = 'documents/' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
     # format = instance.userid + instance.transaction_uuid + instance.file_extension
     return name
 
