@@ -86,36 +86,36 @@ def auc(actual, posterior):
 
 class Submission(models.Model):
 
-	submissionfile = models.FileField(upload_to='documents/')
-	auc_public = models.FloatField(null=True, blank=True)
-	auc_private = models.FloatField(null=True, blank=True)
-	created_at = models.DateTimeField(auto_now_add=True)
-	user = models.ForeignKey(User)  
+    submissionfile = models.FileField(upload_to='documents/')
+    auc_public = models.FloatField(null=True, blank=True)
+    auc_private = models.FloatField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User)  
 
-	def __unicode__(self):
-		return u'%s submission: %s' % (self.user.username, self.submissionfile.url)
+    def __unicode__(self):
+        return u'%s submission: %s' % (self.user.username, self.submissionfile.url)
 
-	def compute_score(self):
-		predicted_private = []
-		predicted_public = []
+    def compute_score(self):
+        predicted_private = []
+        predicted_public = []
         if self.submission.url[0:4]=='http':
             # AWS S3 submission casa
             results_file = requests.get(self.submissionfile.url).text.split('\n')
 
         else:
-    		results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
+            results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
 
         i = 0
-		for r in results_file:
-			if i%10==0:
-				predicted_public.append(float(r))
-			else:
-				predicted_private.append(float(r))
-			i+=1
+        for r in results_file:
+            if i%10==0:
+                predicted_public.append(float(r))
+            else:
+                predicted_private.append(float(r))
+            i+=1
 
-		self.auc_public = auc(real_public, predicted_public)
-		self.auc_private = auc(real_private, predicted_private)
-		self.save()
+        self.auc_public = auc(real_public, predicted_public)
+        self.auc_private = auc(real_private, predicted_private)
+        self.save()
 
  
 @receiver(post_save, sender=Submission)
