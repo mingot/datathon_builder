@@ -60,7 +60,7 @@
         {% if user.is_authenticated %}
         <p><a class="btn btn-lg btn-success" href="{% url 'list' %}" role="button">Make a submission</a></p>
         {% else %}
-        <p><a class="btn btn-lg btn-success" href="{% url 'account_login' %}  " role="button">Get started</a></p>
+        <p><a class="btn btn-lg btn-success" href="{% url 'account_signup' %}  " role="button">Get started</a></p>
         {% endif %}
           
 </div>
