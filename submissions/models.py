@@ -88,9 +88,7 @@ def auc(actual, posterior):
 
 
 def update_filename(instance, filename):
-    # path = "upload/path/"
     name = instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
-    # format = instance.userid + instance.transaction_uuid + instance.file_extension
     return name
 
 
@@ -101,6 +99,7 @@ class Submission(models.Model):
     auc_private = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)  
+    file_error = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return u'%s submission: %s' % (self.user.username, self.submissionfile.url)
@@ -111,6 +110,21 @@ class Submission(models.Model):
         if self.submissionfile.url[0:4]=='http':
             # AWS S3 submission casa
             results_file = requests.get(self.submissionfile.url).text.split('\n')
+            results_file.remove('')  # remove white spaces
+
+            # quality checks
+            if len(results_file) != 341667:
+                self.file_error = 'Length not correct'
+                self.save()
+                return
+
+            # Check for 
+            try:
+                x = float(results_file[0])
+            except:
+                self.file_error = 'All values have to be floats'
+                self.save()
+                return
 
         else:
             results_file = open(str(ROOT_DIR) + '/hackathon' + self.submissionfile.url)
