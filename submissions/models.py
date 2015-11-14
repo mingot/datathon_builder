@@ -103,7 +103,7 @@ class Submission(models.Model):
     file_error = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s %s submission: %s' % (str(self.auc_private), self.user.username, self.submissionfile.url)
+        return u'%s %s submission: %s' % (str(self.auc_public), self.user.username, self.submissionfile.url)
 
     def compute_score(self):
         predicted_private = []
