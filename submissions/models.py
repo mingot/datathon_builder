@@ -19,7 +19,7 @@ real_public = []
 public_indexes = []
 i = 0
 for r in result_file:
-	if i%10==0:  # Private (20%)
+	if i%20==0:  # Private (20%)
 		real_public.append(int(r))
 		public_indexes.append(i)
 		
@@ -89,9 +89,10 @@ def auc(actual, posterior):
 
 def update_filename(instance, filename):
     # path = "upload/path/"
-    name = 'documents/' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
+    name = instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
     # format = instance.userid + instance.transaction_uuid + instance.file_extension
     return name
+
 
 class Submission(models.Model):
 
@@ -118,7 +119,7 @@ class Submission(models.Model):
         for r in results_file:
             if r=='':
                 continue
-            if i%10==0:
+            if i%20==0:
                 predicted_public.append(float(r))
             else:
                 predicted_private.append(float(r))
