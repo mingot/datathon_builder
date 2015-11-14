@@ -88,7 +88,7 @@ def auc(actual, posterior):
 
 
 def update_filename(instance, filename):
-    name = instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
+    name = instance.user.team + '_' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
     return name
 
 
