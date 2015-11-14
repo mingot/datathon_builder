@@ -138,9 +138,9 @@ def submission_done(sender, **kwargs):
 	submission = kwargs['instance']
 	if submission.auc_public is None:
 		print 'creating thread to compute auc...'
-        submission.compute_score()
-		# score_computation_thread = threading.Thread(target=submission.compute_score,args=[])
-		# score_computation_thread.start()
+        # submission.compute_score()
+		score_computation_thread = threading.Thread(target=submission.compute_score,args=[])
+		score_computation_thread.start()
 
 
 
