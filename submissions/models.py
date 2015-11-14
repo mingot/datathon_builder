@@ -116,7 +116,7 @@ class Submission(models.Model):
             i+=1
 
         self.auc_public = auc(real_public, predicted_public)
-        self.auc_private = auc(real_private, predicted_private)
+        # self.auc_private = auc(real_private, predicted_private)
         self.save()
 
  
