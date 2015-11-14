@@ -84,9 +84,15 @@ def auc(actual, posterior):
     return auc
 
 
+def update_filename(instance, filename):
+    # path = "upload/path/"
+    name = 'documents/' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S')
+    # format = instance.userid + instance.transaction_uuid + instance.file_extension
+    return name
+
 class Submission(models.Model):
 
-    submissionfile = models.FileField(upload_to='documents/')
+    submissionfile = models.FileField(upload_to=update_filename)  # 'documents/'
     auc_public = models.FloatField(null=True, blank=True)
     auc_private = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
