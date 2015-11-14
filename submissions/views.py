@@ -27,7 +27,7 @@ def submissions_list(request):
 			# Redirect to the document list after POST
 			return HttpResponseRedirect(reverse('list'))
 	else:
-		form = SubmissionForm() # A empty, unbound form
+		form = SubmissionForm()  # A empty, unbound form
 
     # Load documents for the list page
 	documents = Submission.objects.filter(user=current_user).order_by('-created_at')

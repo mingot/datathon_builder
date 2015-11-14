@@ -8,6 +8,7 @@ from datetime import datetime
 import random
 import threading
 import requests
+from slugify import slugify
 
 # import numpy as np
 # from sklearn import metrics
@@ -88,7 +89,7 @@ def auc(actual, posterior):
 
 
 def update_filename(instance, filename):
-    name = instance.user.team + '_' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
+    name = instance.user.team.replace(' ','_') + '_' + instance.user.username + '_' + datetime.now().strftime('%y%m%d%H%M%S') + '_' + str(int(random.random()*1000))
     return name
 
 
@@ -152,9 +153,9 @@ def submission_done(sender, **kwargs):
 	submission = kwargs['instance']
 	if submission.auc_public is None:
 		print 'creating thread to compute auc...'
-        # submission.compute_score()
-		score_computation_thread = threading.Thread(target=submission.compute_score,args=[])
-		score_computation_thread.start()
+        submission.compute_score()
+		# score_computation_thread = threading.Thread(target=submission.compute_score,args=[])
+		# score_computation_thread.start()
 
 
 
