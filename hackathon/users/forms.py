@@ -13,6 +13,7 @@ class SignupForm(forms.Form):
         ('Red Jaguars', 'Red Jaguars'),
         ('Silver Snakes', 'Silver Snakes'),
         ('Green Monkeys', 'Green Monkeys'),
+        ('BASELINE', 'BASELINE'),
     )
     team = forms.ChoiceField(choices=TEAMS, required=True, label='Team')
 
