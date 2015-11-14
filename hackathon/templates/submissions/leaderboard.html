@@ -10,10 +10,11 @@
 
 	{% if teams %}
 
-	<div class="col-lg-offset-2 col-lg-8">
+	<div class="col-lg-offset-1 col-lg-10">
         <table class="table">
         <thead>
         	<th>position</th>
+            <th>user</th>
         	<th>team</th>
         	<th>last_submission</th>
         	<th># submissions</th>
@@ -24,6 +25,7 @@
           <tr>
             <td>{{ forloop.counter }}</td>      
             <td>{{ team.user.username }}</td>
+            <td>{{ team.user.team }}</td>
             <td>{{ team.last_update }}</td>
             <td>{{ team.number }}</td>
             <td>{{ team.auc }}</td>

@@ -30,11 +30,8 @@ def submissions_list(request):
 		form = SubmissionForm() # A empty, unbound form
 
     # Load documents for the list page
-	documents = Submission.objects.filter(user=current_user)
-	if documents:
-		documents = documents[::-1]  # rever order
+	documents = Submission.objects.filter(user=current_user).order_by('-created_at')
 	
-
     # Render list page with the documents and the form
 	return render_to_response(
 		'submissions/list.html',

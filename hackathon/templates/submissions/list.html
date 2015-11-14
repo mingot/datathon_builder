@@ -5,13 +5,15 @@
 {% block content %}
 
 <div class="row">
-	<h1> Model submissions </h1>
+	<h1> Model submissions</h1>
 	<hr>
 
     <!-- Upload form. Note enctype attribute! -->
     <div class="col-lg-offset-2 col-lg-8">
     <div class="jumbotron">
-        <p class="lead">Submit your predicted scores for the the churn target. File must have a predicted score in each line with 10 decimal places at most.</p>
+        <p class="lead"> Hi <strong>{{request.user.username}}</strong>, from team <strong>{{request.user.team}}</strong>!</p>
+        
+        <p class="lead">Submit your predicted scores for the the churn target. Remember that the file has to have exactly 341667 lines, with the predicted score for each row of the test set. Each prediction must be a real number between 0 and 1.</p>
         <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
