@@ -18,5 +18,5 @@ urlpatterns = patterns('',
         regex=r'^final/$',
         view=leaderboard_final,
         name='leaderboard_final'
-    ),
+    ),#
 )
