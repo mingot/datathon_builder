@@ -80,9 +80,9 @@ def leaderboard(request):
 def leaderboard_final(request):
 
 	teams = Submission.objects.exclude(auc_private__isnull=False).order_by('-auc_private')
-	for team in teams:
-		team['user'] = User.objects.get(pk=team['user'])
-		team['user'].name
+	# for team in teams:
+	# 	team['user'] = User.objects.get(pk=team.user)
+	# 	team['user'].name
 
 	return render_to_response(
 		'submissions/leaderboard.html',
