@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Final leaderboard{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<h1> Final Leaderboard </h1>
+	<hr>
+
+	{% if teams %}
+
+
+	<div class="col-lg-offset-1 col-lg-10">
+        <div class="">
+        <br>
+
+        <table class="table">
+        <thead>
+        	<th>position</th>
+        	<th>team</th>
+        	<th>auc</th>
+		</thead>
+        <tbody>
+        {% for team in teams %}
+          <tr>
+            <td>{{ forloop.counter }}</td>      
+            <td>{{ team.user.team }}</td>
+            <td>{{ team.auc_private }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+        </table> 
+    </div>
+		
+        
+    {% else %}
+        <p>No submissions yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock content %}

@@ -85,7 +85,7 @@ def leaderboard_final(request):
 	# 	team['user'].name
 
 	return render_to_response(
-		'submissions/leaderboard.html',
+		'submissions/leaderboard_final.html',
 		{'teams': teams},
 		context_instance=RequestContext(request)
 	)
