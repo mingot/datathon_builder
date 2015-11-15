@@ -88,3 +88,4 @@ def leaderboard_final(request):
 		'submissions/leaderboard.html',
 		{'teams': teams},
 		context_instance=RequestContext(request)
+	)
