@@ -10,33 +10,6 @@ import threading
 import requests
 from slugify import slugify
 
-# import numpy as np
-# from sklearn import metrics
-
-
-# result_file = open(str(ROOT_DIR) + '/test.csv')
-# real_private = []
-# real_public = []
-# public_indexes = []
-# i = 0
-# for r in result_file:
-# 	if i%20==0:  # Private (20%)
-# 		real_public.append(int(r))
-# 		public_indexes.append(i)
-		
-# 	else:
-# 		real_private.append(int(r))
-# 	i+=1
-
-
-# def auc(real, pred):
-# 	real = np.array(real)
-# 	pred = np.array(pred)
-# 	# fpr, tpr, thresholds = metrics.roc_curve(real, pred, pos_label=1)
-# 	# result = metrics.auc(fpr, tpr)
-# 	result = metrics.roc_auc_score(real, pred)
-# 	return result
-
 
 def tied_rank(x):
     """
@@ -111,7 +84,7 @@ class Submission(models.Model):
         predicted_public = []
         if self.submissionfile.url[0:4]=='http':
             # AWS S3 submission casa
-            results_file = requests.get(self.submissionfile.url).text.split('\n')
+            results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
             results_file.remove('')  # remove white spaces
 
             # quality checks

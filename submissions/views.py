@@ -6,15 +6,19 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models.aggregates import Max, Count
 from config.settings.common import ROOT_DIR
+import requests
 
 from hackathon.users.models import User
 from .models import Submission, auc
 from .forms import SubmissionForm
 
-result_file = open(str(ROOT_DIR) + '/test.csv')
+
+### Import test set results to compute AUC
+results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
+results_file.remove('')  # remove white spaces
 real_public = []
 i = 0
-for r in result_file:
+for r in results_file:
 	if i%20==0:  # Private (20%)
 		real_public.append(int(r))
 	i+=1
@@ -30,7 +34,6 @@ def submissions_list(request):
 		if form.is_valid():
 			
 			try:
-			# predicted_public = []
 				predicted_public = [0.0]*17084
 				i = j = 0
 				for r in request.FILES['submissionfile']:
@@ -39,7 +42,6 @@ def submissions_list(request):
 					if i%20==0:
 						predicted_public[j] = float(r)
 						j+=1
-						# predicted_public.append(float(r))
 					i+=1
 				auc_public = auc(real_public, predicted_public)
 				newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
@@ -80,9 +82,6 @@ def leaderboard(request):
 def leaderboard_final(request):
 
 	teams = Submission.objects.filter(auc_private__isnull=False).order_by('-auc_private')
-	# for team in teams:
-	# 	team['user'] = User.objects.get(pk=team.user)
-	# 	team['user'].name
 
 	return render_to_response(
 		'submissions/leaderboard_final.html',
