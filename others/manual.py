@@ -1,3 +1,8 @@
+import numpy as np
+import time
+
+start=time.time()
+
 result_file = open('/Users/mingot/Projectes/BCNAnalytics/hackathon/test.csv')
 real_private = []
 real_public = []
@@ -16,16 +21,6 @@ for r in result_file:
 
 
 def tied_rank(x):
-    """
-    This function computes the tied rank of elements in x.
-    Parameters
-    ----------
-    x : list of numbers, numpy array
-    Returns
-    -------
-    score : list of numbers
-            The tied rank f each element in x
-    """
     sorted_x = sorted(zip(x,range(len(x))))
     r = [0 for k in x]
     cur_val = sorted_x[0][0]
@@ -42,20 +37,6 @@ def tied_rank(x):
     return r
 
 def auc(actual, posterior):
-    """
-    This function computes the AUC error metric for binary classification.
-    Parameters
-    ----------
-    actual : list of binary numbers, numpy array
-             The ground truth value
-    posterior : same type as actual
-                Defines a ranking on the binary numbers, from most likely to
-                be positive to least likely to be positive.
-    Returns
-    -------
-    score : double
-            The mean squared error between actual and posterior
-    """
     r = tied_rank(posterior)
     num_positive = len([0 for x in actual if x==1])
     num_negative = len(actual)-num_positive
@@ -71,29 +52,48 @@ results_file = open('/Users/mingot/Downloads/train_test/wifi/picadilly_151114113
 # results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114104525_681.csv')
 
 
-
-i = 0
-predicted_private = []
-predicted_public = []
-predicted_total = []
+t1 = time.time()
+i = j = 0
+# predicted_private = []
+# predicted_public = []
+predicted_public = [0.0]*17084
+# predicted_total = []
 for r in results_file:
     if r=='':
         continue
-    predicted_total.append(float(r))
+    # predicted_total.append(float(r))
     if i%20==0:
-        predicted_public.append(float(r))
-    else:
-        predicted_private.append(float(r))
+        # predicted_public.append(float(r))
+        predicted_public[j] = float(r)
+        j+=1
+    # else:
+    #     predicted_private.append(float(r))
     i+=1
 
-print len(real_public)
-print len(predicted_public)
-print real_public[0:10]
-print predicted_public[0:10]
+# print len(real_public)
+# print len(predicted_public)
+# print real_public[0:10]
+# print predicted_public[0:10]
+
+t2 = time.time()
+
+# len(predicted_private)
 auc_public = auc(real_public, predicted_public)
-auc_private = auc(real_private, predicted_private)
-auc_total = auc(real_total, predicted_total)
+
+print len(predicted_public)
+t3 = time.time()
+# auc_private = auc(real_private, predicted_private)
+# auc_total = auc(real_total, predicted_total)
+
+print t2-t1
+print t3-t2
+
+# auc_public = auc(np.array(real_public), np.array(predicted_public))
+# auc_private = auc(np.array(real_private), np.array(predicted_private))
+# auc_total = auc(np.array(real_total), np.array(predicted_total))
 
 print auc_public
-print auc_private
-print auc_total
+# print auc_private
+# print auc_total
+
+# print time.time()-start

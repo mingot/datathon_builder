@@ -11,7 +11,6 @@ from hackathon.users.models import User
 from .models import Submission, auc
 from .forms import SubmissionForm
 
-
 result_file = open(str(ROOT_DIR) + '/test.csv')
 real_public = []
 i = 0
@@ -30,18 +29,23 @@ def submissions_list(request):
 		form = SubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
 			
-			predicted_public = []
-			i = 0
-			for r in request.FILES['submissionfile']:
-				if r=='':
-					continue
-				if i%20==0:
-					predicted_public.append(float(r))
-				i+=1
-
-			auc_public = auc(real_public, predicted_public)
-			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
-			newdoc.save()
+			try:
+			# predicted_public = []
+				predicted_public = [0.0]*17084
+				i = j = 0
+				for r in request.FILES['submissionfile']:
+					if r=='':
+						continue
+					if i%20==0:
+						predicted_public[j] = float(r)
+						j+=1
+						# predicted_public.append(float(r))
+					i+=1
+				auc_public = auc(real_public, predicted_public)
+				newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
+				newdoc.save()
+			except:
+				pass
 
 			# Redirect to the document list after POST
 			return HttpResponseRedirect(reverse('list'))
