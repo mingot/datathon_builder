@@ -6,9 +6,8 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from datetime import datetime
 import random
-import threading
 import requests
-from slugify import slugify
+
 
 
 def tied_rank(x):
@@ -84,7 +83,7 @@ class Submission(models.Model):
         predicted_public = []
         if self.submissionfile.url[0:4]=='http':
             # AWS S3 submission casa
-            results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
+            results_file = requests.get(self.submissionfile.url).text.split('\n')
             results_file.remove('')  # remove white spaces
 
             # quality checks
