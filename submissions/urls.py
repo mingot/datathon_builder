@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from .views import submissions_list, leaderboard
+from .views import submissions_list, leaderboard, leaderboard_final
 
 
 urlpatterns = patterns('',
@@ -13,5 +13,10 @@ urlpatterns = patterns('',
         regex=r'^leaderboard/$',
         view=leaderboard,
         name='leaderboard'
+    ),
+    url(
+        regex=r'^final/$',
+        view=leaderboard_final,
+        name='leaderboard_final'
     ),
 )

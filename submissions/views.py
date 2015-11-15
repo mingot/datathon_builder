@@ -75,3 +75,16 @@ def leaderboard(request):
 		{'teams': teams},
 		context_instance=RequestContext(request)
 	)
+
+
+def leaderboard_final(request):
+
+	teams = Submission.objects.exclude(auc_private__isnull=False).order_by('-auc')
+	for team in teams:
+		team['user'] = User.objects.get(pk=team['user'])
+		team['user'].name
+
+	return render_to_response(
+		'submissions/leaderboard.html',
+		{'teams': teams},
+		context_instance=RequestContext(request)

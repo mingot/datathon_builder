@@ -45,55 +45,51 @@ def auc(actual, posterior):
            (num_negative*num_positive))
     return auc
 
-results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114105945_560.csv')
-results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114105701_860.csv')
-results_file = open('/Users/mingot/Downloads/train_test/wifi/picadilly_151114113604_124.csv')
+# results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114105945_560.csv')
+# results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114105701_860.csv')
+# results_file = open('/Users/mingot/Downloads/train_test/wifi/picadilly_151114113604_124.csv')
+
+
+files = [
+'/Users/mingot/Downloads/final/Alpha_aiorla_151115095842_277',
+'/Users/mingot/Downloads/final/Bcn_R_users_group_Jordi_151115020356_108',
+'/Users/mingot/Downloads/final/Green_Monkeys_Antonio_151115100244_817',
+'/Users/mingot/Downloads/final/Hacaguays_cristian_pachon_151115094724_643',
+'/Users/mingot/Downloads/final/Pretty_fly_for_a_wifi_picadilly_151115095817_930',
+'/Users/mingot/Downloads/final/Red_Jaguars_xparedes_151115100106_862',
+'/Users/mingot/Downloads/final/TeamUNO_xavijacas_151115095826_474',
+'/Users/mingot/Downloads/final/The_G-Priors_uhoenig_151115095816_915',
+'/Users/mingot/Downloads/final/Silver_Snakes_fizlazgmail_151115095811_825',
+]
 
 # results_file = open('/Users/mingot/Downloads/train_test/wifi/wife-high_151114104525_681.csv')
 
+for result_filename in files:
+    i = 0
+    predicted_private = []
+    predicted_public = []
+    predicted_total = []
+    results_file = open(result_filename)
+    for r in results_file:
+        if r=='':
+            continue
+        if r=='NA':
+            r=0
+        if r=='NA ':
+            r=0
+        try:
+            predicted_total.append(float(r))
+        except:
+            print r
+        if i%20==0:
+            predicted_public.append(float(r))
+        else:
+            predicted_private.append(float(r))
+        i+=1
 
-t1 = time.time()
-i = j = 0
-# predicted_private = []
-# predicted_public = []
-predicted_public = [0.0]*17084
-# predicted_total = []
-for r in results_file:
-    if r=='':
-        continue
-    # predicted_total.append(float(r))
-    if i%20==0:
-        # predicted_public.append(float(r))
-        predicted_public[j] = float(r)
-        j+=1
-    # else:
-    #     predicted_private.append(float(r))
-    i+=1
+    auc_public = auc(real_public, predicted_public)
+    auc_private = auc(real_private, predicted_private)
+    auc_total = auc(real_total, predicted_total)
 
-# print len(real_public)
-# print len(predicted_public)
-# print real_public[0:10]
-# print predicted_public[0:10]
-
-t2 = time.time()
-
-# len(predicted_private)
-auc_public = auc(real_public, predicted_public)
-
-print len(predicted_public)
-t3 = time.time()
-# auc_private = auc(real_private, predicted_private)
-# auc_total = auc(real_total, predicted_total)
-
-print t2-t1
-print t3-t2
-
-# auc_public = auc(np.array(real_public), np.array(predicted_public))
-# auc_private = auc(np.array(real_private), np.array(predicted_private))
-# auc_total = auc(np.array(real_total), np.array(predicted_total))
-
-print auc_public
-# print auc_private
-# print auc_total
-
-# print time.time()-start
+    print "team: %s" % result_filename
+    print "auc total: %f, auc private: %f, auc public: %f" % (auc_total, auc_private, auc_public)
