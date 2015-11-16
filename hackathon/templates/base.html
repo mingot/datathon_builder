@@ -55,9 +55,11 @@
 
             <ul class="nav navbar-nav pull-right">
               {% if request.user.is_authenticated %}
+              {% comment %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'data' %}">Data</a>
                 </li>
+              {% endcomment %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'list' %}">Submissions</a>
                 </li>
