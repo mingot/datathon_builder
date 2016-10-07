@@ -4,6 +4,14 @@ hackathon
 Django project for a Barcelona Data Hackathon. Provides a platform to evaluate model submission for a prediction problem. Kaggle like.
 
 
+Quickstart
+------------
+
+    pip install -r requirements/local.py
+    python manage migrate
+    python manage createsuperuser
+    python manage runserver
+
 Settings
 ------------
 
