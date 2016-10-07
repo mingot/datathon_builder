@@ -9,7 +9,7 @@ Quickstart
 
 .. code-block:: python
 
-    pip install -r requirements/local.py
+    pip install -r requirements/local.txt
     python manage migrate
     python manage createsuperuser
     python manage runserver
