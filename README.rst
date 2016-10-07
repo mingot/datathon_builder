@@ -7,6 +7,7 @@ Django project for a Barcelona Data Hackathon. Provides a platform to evaluate m
 Quickstart
 ------------
 
+.. code-block:: python
 
     pip install -r requirements/local.py
     python manage migrate
