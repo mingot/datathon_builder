@@ -14,14 +14,12 @@
         <p class="lead"> Hi <strong>{{request.user.username}}</strong>, from team <strong>{{request.user.team}}</strong>!</p>
         
         <p class="lead">Submit your predicted scores for the the churn target. Remember that the file has to have exactly 341667 lines, with the predicted score for each row of the test set. Each prediction must be a real number between 0 and 1.</p>
-        <!--
         <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
             <p>{{ form.submissionfile.errors }}{{ form.submissionfile }}</p>
             <p><input class="btn-primary" type="submit" value="Upload" /></p>
         </form>
-        -->
     </div>
     </div>
 

@@ -3,16 +3,15 @@ from django import forms
 
 class SignupForm(forms.Form):
     TEAMS = (
-        ('The G-Priors', 'The G-Priors'),
-        ('TeamUNO', 'TeamUNO'),
-        ('Pretty fly for a wifi', 'Pretty fly for a wifi'),
-        ('Multimetro', 'Multimetro'),
-        ('Hacaguays', 'Hacaguays'),
-        ('Bcn R users group', 'Bcn R users group'),
+        ('RugBcn', 'RugBcn'),
+        ('EducatedLobsters', 'EducatedLobsters'),
+        ('Low riders', 'Low riders'),
+        ('Erasmus heroes', 'Erasmus heroes'),
+        ('DeepYellow', 'DeepYellow'),
+        ('Pachons', 'Pachons'),
         ('Alpha', 'Alpha'),
-        ('Red Jaguars', 'Red Jaguars'),
-        ('Silver Snakes', 'Silver Snakes'),
-        ('Green Monkeys', 'Green Monkeys'),
+        ('Omega', 'Omega'),
+        ('Race Against the Machine', 'Race Against the Machine'),
         ('BASELINE', 'BASELINE'),
     )
     team = forms.ChoiceField(choices=TEAMS, required=True, label='Team')
@@ -20,3 +19,7 @@ class SignupForm(forms.Form):
     def signup(self, request, user):
         user.team = self.cleaned_data['team']
         user.save()
+
+
+
+
