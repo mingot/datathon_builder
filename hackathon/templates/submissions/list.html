@@ -13,7 +13,8 @@
     <div class="jumbotron">
         <p class="lead"> Hi <strong>{{request.user.username}}</strong>, from team <strong>{{request.user.team}}</strong>!</p>
         
-        <p class="lead">Submit your predicted scores for the the churn target. Remember that the file has to have exactly 341667 lines, with the predicted score for each row of the test set. Each prediction must be a real number between 0 and 1.</p>
+        <p class="lead">Submit your recommended monster for each user of the test set. Remember that the file has to have exactly 30000 lines, each row corresponding to the monsterid recomended. </p>
+        <p class="lead">Remember that to avoid overfitting, the results presented here are just considering 20% of the test set. The final leaderboard can change when computing the precision with the whole data set.</p>
         <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
@@ -30,7 +31,7 @@
         <thead>
         	<th>file</th>
         	<th>date</th>
-        	<th>auc</th>
+        	<th>precision</th>
 		</thead>
         <tbody>
         {% for submission in submissions %}
@@ -38,7 +39,7 @@
             <td><a href="{{ submission.submissionfile.url }}">{{ submission.submissionfile.name }}</a></td>      
             <td>{{submission.created_at}}</td>
             {% if not submission.file_error %}
-                <td>{{submission.auc_public}}</td>
+                <td>{{submission.auc_public|floatformat:3 }} %</td>
             {% else %}
                 <td>{{submission.file_error}}</td>
             {% endif %}

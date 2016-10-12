@@ -9,19 +9,27 @@ from config.settings.common import ROOT_DIR
 import requests
 
 from hackathon.users.models import User
-from .models import Submission, auc
+from .models import Submission, auc, precision
 from .forms import SubmissionForm
 
 
 ### Import test set results to compute AUC
-results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
-results_file.remove('')  # remove white spaces
+# results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
+results_file = requests.get('https://s3.amazonaws.com/bcndatahackathon2/solution.csv').text.split('\n')
+
 real_public = []
+real_private = []
+results_file.pop(0)
 i = 0
 for r in results_file:
-	if i%20==0:  # Private (20%)
-		real_public.append(int(r))
-	i+=1
+	try:
+		monster = r.split(',')[1]
+		# real_private.append(monster)
+		if i%20==0:  # Private (20%)
+			real_public.append(monster)
+		i+=1
+	except:
+		pass
 
 
 @login_required
@@ -33,21 +41,23 @@ def submissions_list(request):
 		form = SubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
 			
-			try:
-				predicted_public = [0.0]*17084
-				i = j = 0
-				for r in request.FILES['submissionfile']:
-					if r=='':
-						continue
-					if i%20==0:
-						predicted_public[j] = float(r)
-						j+=1
-					i+=1
-				auc_public = auc(real_public, predicted_public)
-				newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
-				newdoc.save()
-			except:
-				pass
+			# try:
+			predicted_public = ['0'] * 1500
+			i = j = 0
+			for r in request.FILES['submissionfile']:
+				if r=='':
+					continue
+				if i%20==0:
+					predicted_public[j] = r.strip()
+					j+=1
+				i+=1
+			# auc_public = auc(real_public, predicted_public)
+			auc_public = precision(real_public, predicted_public)
+			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
+			newdoc.save()
+			# except Exception as e:
+			# 	print 'Error', e
+				
 
 			# Redirect to the document list after POST
 			return HttpResponseRedirect(reverse('list'))
