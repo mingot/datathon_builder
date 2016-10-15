@@ -8,10 +8,11 @@ class SignupForm(forms.Form):
         ('Low riders', 'Low riders'),
         ('Erasmus heroes', 'Erasmus heroes'),
         ('DeepYellow', 'DeepYellow'),
-        ('Pachons', 'Pachons'),
+        ('Blua Tigro', 'Blua Tigro'),
         ('Alpha', 'Alpha'),
         ('Omega', 'Omega'),
         ('Race Against the Machine', 'Race Against the Machine'),
+        ('Equipo A', 'Equipo A'),
         ('BASELINE', 'BASELINE'),
     )
     team = forms.ChoiceField(choices=TEAMS, required=True, label='Team')
