@@ -14,6 +14,8 @@ from .forms import SubmissionForm
 
 
 ### Import test set results to compute AUC
+# results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
+results_file = requests.get('https://s3.amazonaws.com/bcndatahackathon2/solution.csv').text.split('\n')
 
 real_public = []
 real_private = []
