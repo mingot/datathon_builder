@@ -1,21 +1,17 @@
 {% extends "base.html" %}
 {% load staticfiles i18n %}
 
-
-
-
 {% block title %}Get the data{% endblock %}
 
 {% block content %}
 
 <div class="row">
-  <h1> Get the data </h1>
-  <hr>
-
-  <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/info_files.zip" role="button">Get Competition Data</a></p>
-  <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/variables.pdf" role="button">Get Variables Explanation</a></p> 
-  <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/presentation.pdf" role="button">Get Presentation</a></p> 
-
-
+  <div class="col col-lg-8">
+    <h1> Get the data </h1> 
+    <hr>
+    <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/info_files.zip" role="button">Get Competition Data</a></p>
+    <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/variables.pdf" role="button">Get Variables Explanation</a></p> 
+    <p><a class="btn btn-lg btn-success" href="https://s3.amazonaws.com/bcndatahackathon2/presentation.pdf" role="button">Get Presentation</a></p> 
+  </div>
 </div>
 {% endblock content %}
