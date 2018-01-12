@@ -9,7 +9,8 @@ from config.settings.common import ROOT_DIR
 import requests
 
 from hackathon.users.models import User
-from .models import Submission, auc, precision
+from .models import Submission
+from .aux_math import auc, precision
 from .forms import SubmissionForm
 
 
