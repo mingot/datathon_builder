@@ -84,7 +84,7 @@ def submissions_list(request):
 
 def leaderboard(request):
 
-	teams = Submission.objects.exclude(auc_public__isnull=True).values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
+	teams = Submission.objects.exclude(auc_public__isnull=True).values('user').annotate(auc=Min('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
 	for team in teams:
 		team['user'] = User.objects.get(pk=team['user'])
 		team['user'].name
