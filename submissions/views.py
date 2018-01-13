@@ -84,7 +84,7 @@ def submissions_list(request):
 
 def leaderboard(request):
 
-	teams = Submission.objects.exclude(auc_public__isnull=True).values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('-auc')
+	teams = Submission.objects.exclude(auc_public__isnull=True).values('user').annotate(auc=Max('auc_public'), last_update=Max('created_at'), number=Count('submissionfile')).order_by('auc')
 	for team in teams:
 		team['user'] = User.objects.get(pk=team['user'])
 		team['user'].name
@@ -98,7 +98,7 @@ def leaderboard(request):
 
 def leaderboard_final(request):
 
-	teams = Submission.objects.filter(auc_private__isnull=False).order_by('-auc_private')
+	teams = Submission.objects.filter(auc_private__isnull=False).order_by('auc_private')
 
 	return render_to_response(
 		'submissions/leaderboard_final.html',
