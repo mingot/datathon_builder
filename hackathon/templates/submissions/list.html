@@ -40,7 +40,7 @@
             <td><a href="{{ submission.submissionfile.url }}">{{ submission.submissionfile.name }}</a></td>      
             <td>{{submission.created_at}}</td>
             {% if not submission.file_error %}
-                <td>{{submission.auc_public|floatformat:3 }} %</td>
+                <td>{{submission.auc_public|floatformat:3 }}</td>
             {% else %}
                 <td>{{submission.file_error}}</td>
             {% endif %}
