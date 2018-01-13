@@ -14,23 +14,30 @@ from .aux_math import auc, precision
 from .forms import SubmissionForm
 
 
-### Import test set results to compute AUC
-# results_file = requests.get('https://s3.eu-central-1.amazonaws.com/bcndatahackathon/testset_churn.csv').text.split('\n')
-results_file = requests.get('https://s3.amazonaws.com/bcndatahackathon2/solution.csv').text.split('\n')
-
-real_public = []
-real_private = []
-results_file.pop(0)
-i = 0
-for r in results_file:
-	try:
-		monster = r.split(',')[1]
-		# real_private.append(monster)
-		if i%20==0:  # Private (20%)
-			real_public.append(monster)
+def read_file(input_file):
+	real_public = []
+	real_private = []
+	i = 0
+	for r in input_file:
+		if i==0 or r=='':
+			i+=1
+			continue
+		result = float(r)
+		real_private.append(result)
+		if i % 3 == 0:  # Private (33%)
+			real_public.append(result)
 		i+=1
-	except:
-		pass
+	return real_private, real_public
+
+### Import test set results to compute AUC
+# import requests
+# from aux_math import auc
+results_file = requests.get('https://s3.amazonaws.com/bcndatathonpollution/solution.csv').text.split('\n')
+real_private, real_public = read_file(results_file)
+
+# predicted_file = open('/Users/mingot/Projectes/BCNAnalytics/datathon_pollution/sample_random.csv','r')
+# predicted_private, predicted_public = read_file(predicted_file)
+# auc_public = auc(real_public, predicted_public)
 
 
 @login_required
@@ -41,25 +48,21 @@ def submissions_list(request):
 	if request.method == 'POST':
 		form = SubmissionForm(request.POST, request.FILES)
 		if form.is_valid():
-			
-			# try:
-			predicted_public = ['0'] * 1500
-			i = j = 0
-			for r in request.FILES['submissionfile']:
-				if r=='':
-					continue
-				if i%20==0:
-					predicted_public[j] = r.strip()
-					j+=1
-				i+=1
-			# auc_public = auc(real_public, predicted_public)
-			auc_public = precision(real_public, predicted_public)
+
+			input_file = request.FILES['submissionfile']
+
+			try:
+				predicted_private, predicted_public = read_file(input_file)
+			except Exception as e:
+				print 'Error', e
+
+			auc_public = auc(real_public, predicted_public)
+			#auc_public = precision(real_public, predicted_public)
 			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
 			newdoc.save()
 			# except Exception as e:
 			# 	print 'Error', e
 				
-
 			# Redirect to the document list after POST
 			return HttpResponseRedirect(reverse('list'))
 	else:
