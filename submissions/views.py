@@ -10,7 +10,7 @@ import requests
 
 from hackathon.users.models import User
 from .models import Submission
-from .aux_math import auc, precision
+from .aux_math import auc, precision, log_loss
 from .forms import SubmissionForm
 
 
@@ -32,6 +32,8 @@ def read_file(input_file):
 ### Import test set results to compute AUC
 # import requests
 # from aux_math import auc
+## if you see this and you are a participant, 
+## be conscient of the importance in the ethics for professional development
 results_file = requests.get('https://s3.amazonaws.com/bcndatathonpollution/solution.csv').text.split('\n')
 real_private, real_public = read_file(results_file)
 
@@ -56,9 +58,10 @@ def submissions_list(request):
 			except Exception as e:
 				print 'Error', e
 
-			auc_public = auc(real_public, predicted_public)
-			#auc_public = precision(real_public, predicted_public)
-			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, auc_public=auc_public)
+			auc_public = log_loss(real_public, predicted_public)
+			auc_private = log_loss(real_private, predicted_private)
+			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, 
+				auc_public=auc_public, auc_private=auc_private)
 			newdoc.save()
 			# except Exception as e:
 			# 	print 'Error', e
