@@ -10,9 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 @python_2_unicode_compatible
 class User(AbstractUser):
-
-    # First Name and Last Name do not cover name patterns
-    # around the globe.
     team = models.CharField(max_length=50, null=True, blank=True)
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
 

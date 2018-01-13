@@ -14,8 +14,8 @@
     <div class="jumbotron">
         <p class="lead"> Hi <strong>{{request.user.username}}</strong>, from team <strong>{{request.user.team}}</strong>!</p>
         
-        <p class="lead">Submit your recommended monster for each user of the test set. Remember that the file has to have exactly 30000 lines, each row corresponding to the monsterid recomended. </p>
-        <p class="lead">Remember that to avoid overfitting, the results presented here are just considering 20% of the test set. The final leaderboard can change when computing the precision with the whole data set.</p>
+        <p class="lead">Submit your recommendations with the probability per day-station of the NO2 concentration being > 120. The file has to have exactly XX lines each line representing the prediction of the test set (first line will be ignored). </p>
+        <p class="lead">Remember that to avoid overfitting, the results presented here are just considering 30% of the test set. The final leaderboard can change when computing the precision with the whole data set.</p>
         <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
