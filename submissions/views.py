@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models.aggregates import Max, Count
+from django.db.models.aggregates import Max, Count, Min
 from config.settings.common import ROOT_DIR
 import requests
 
