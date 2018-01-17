@@ -55,14 +55,15 @@ def submissions_list(request):
 
 			try:
 				predicted_private, predicted_public = read_file(input_file)
+
+				auc_public = log_loss(real_public, predicted_public)
+				auc_private = log_loss(real_private, predicted_private)
+				newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, 
+					auc_public=auc_public, auc_private=auc_private)
+				newdoc.save()
+
 			except Exception as e:
 				print 'Error', e
-
-			auc_public = log_loss(real_public, predicted_public)
-			auc_private = log_loss(real_private, predicted_private)
-			newdoc = Submission(submissionfile=request.FILES['submissionfile'], user=current_user, 
-				auc_public=auc_public, auc_private=auc_private)
-			newdoc.save()
 			# except Exception as e:
 			# 	print 'Error', e
 				
