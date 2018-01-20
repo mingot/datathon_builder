@@ -26,7 +26,7 @@
           <tr>
             <td>{{ forloop.counter }}</td>      
             <td>{{ team.user.team }}</td>
-            <td>{{ team.auc_private }}</td>
+            <td>{{ team.auc|floatformat:3 }}</td>
           </tr>
         {% endfor %}
         </tbody>
