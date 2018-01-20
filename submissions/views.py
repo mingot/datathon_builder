@@ -34,7 +34,8 @@ def read_file(input_file):
 # from aux_math import auc
 ## if you see this and you are a participant, 
 ## be conscient of the importance in the ethics for professional development
-results_file = requests.get('https://s3.amazonaws.com/bcndatathonpollution/solution.csv').text.split('\n')
+#results_file = requests.get('https://s3.amazonaws.com/bcndatathonpollution/solution.csv').text.split('\n')
+results_file = requests.get('https://s3.amazonaws.com/bcndatathonpollution/solution_new.csv').text.split('\n')
 real_private, real_public = read_file(results_file)
 
 # predicted_file = open('/Users/mingot/Projectes/BCNAnalytics/datathon_pollution/sample_random.csv','r')
