@@ -79,7 +79,7 @@ def submissions_list(request):
 
 	now = datetime.datetime.now()
 	print now
-	show_form = now < datetime.datetime(2018,1,21,10,30)
+	show_form = now < datetime.datetime(2018,1,21,9,30)
 	
     # Render list page with the documents and the form
 	return render_to_response(
