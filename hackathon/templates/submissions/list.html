@@ -16,12 +16,14 @@
         
         <p class="lead">Submit your recommendations with the probability per day-station of the NO2 concentration being > 130. The file has to have exactly 836 lines (835 of data + the header) each line representing the prediction of the test set (first line will be ignored). </p>
         <p class="lead">Remember that to avoid overfitting, the results presented here are just considering 30% of the test set. The final leaderboard can change when computing the precision with the whole data set.</p>
+        {%if show_form%}
         <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.non_field_errors }}</p>
             <p>{{ form.submissionfile.errors }}{{ form.submissionfile }}</p>
             <p><input class="btn-primary" type="submit" value="Upload" /></p>
         </form>
+        {%endif%}
     </div>
     </div>
 

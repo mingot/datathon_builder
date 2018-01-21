@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.aggregates import Max, Count, Min
 from config.settings.common import ROOT_DIR
 import requests
+import datetime
 
 from hackathon.users.models import User
 from .models import Submission
@@ -75,11 +76,15 @@ def submissions_list(request):
 
     # Load documents for the list page
 	documents = Submission.objects.filter(user=current_user).order_by('-created_at')
+
+	now = datetime.datetime.now()
+	print now
+	show_form = now < datetime.datetime(2018,1,21,10,30)
 	
     # Render list page with the documents and the form
 	return render_to_response(
 		'submissions/list.html',
-		{'submissions': documents, 'form': form},
+		{'submissions': documents, 'form': form, 'show_form':show_form},
 		context_instance=RequestContext(request)
 	)
 
